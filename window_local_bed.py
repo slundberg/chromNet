@@ -25,15 +25,13 @@ def get_bin_pos(chr, pos):
 
 # mark all binned that are touched with 1
 binValues = np.zeros(int(sum(chrLengths)/1000), dtype=np.int32)
-f = open(sys.argv[1])
-for line in f:
+for line in sys.stdin:
     parts = line.split()
     if parts[0] in chrOffsets:
         startPos = get_bin_pos(parts[0], int(parts[1]))
         endPos = get_bin_pos(parts[0], int(parts[2]))
         for i in xrange(startPos, endPos+1):
             binValues[i] = 1
-f.close()
 
 # print the output of all binary bins
 np.savetxt(sys.stdout, binValues, fmt="%d")
